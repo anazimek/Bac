@@ -23,7 +23,12 @@ class IntranetController extends AppController
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
+                if ($this->Auth->User('is_admin')){
+                    return $this->redirect(['controller' => 'Users','action' => 'index', 'prefix' => 'admin']);
+                }
+                else{
                 return $this->redirect($this->Auth->redirectUrl());
+                }
             } else {
                 $this->Flash->error(__('Nom Utilisateur ou Mot de passe incorrect'), [
                     'key' => 'auth'
